@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dashboard interaktif untuk mempelajari Human-Computer Interaction dan visualisasi data.">
+  <title>Dashboard Penjualan | Studi Kasus HCI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div>
+        <p class="eyebrow">STUDI KASUS HCI & DATA VISUALIZATION</p>
+        <h1>Dashboard Penjualan UMKM</h1>
+        <p class="subtitle">Memahami tren penjualan melalui antarmuka yang jelas dan interaktif.</p>
+      </div>
+      <span class="header-mark" aria-hidden="true">📊</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro panel" aria-labelledby="case-title">
+      <div>
+        <h2 id="case-title">Permasalahan</h2>
+        <p>Pemilik UMKM memiliki catatan penjualan bulanan, tetapi sulit melihat produk terlaris dan perubahan penjualan. Dashboard ini menyajikan data contoh dengan grafik, ringkasan, dan filter agar informasi lebih mudah dipahami.</p>
+      </div>
+      <div class="case-tag">Data contoh untuk pembelajaran</div>
+    </section>
+
+    <section class="controls panel" aria-labelledby="filter-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="filter-title">Jelajahi data</h2>
+          <p>Pilih kategori produk untuk memperbarui ringkasan dan grafik.</p>
+        </div>
+      </div>
+      <div class="filter-row">
+        <label for="categoryFilter">Kategori produk</label>
+        <select id="categoryFilter">
+          <option value="Semua">Semua kategori</option>
+          <option value="Makanan">Makanan</option>
+          <option value="Minuman">Minuman</option>
+          <option value="Kerajinan">Kerajinan</option>
+        </select>
+        <button id="resetButton" class="button-secondary" type="button">Atur ulang filter</button>
+      </div>
+      <p id="filterStatus" class="status" role="status" aria-live="polite">Menampilkan semua kategori.</p>
+    </section>
+
+    <section class="metrics" aria-label="Ringkasan penjualan">
+      <article class="metric-card">
+        <p class="metric-label">Total pendapatan</p>
+        <p class="metric-value" id="totalRevenue">Rp0</p>
+        <p class="metric-note">Berdasarkan data terpilih</p>
+      </article>
+      <article class="metric-card">
+        <p class="metric-label">Total unit terjual</p>
+        <p class="metric-value" id="totalUnits">0</p>
+        <p class="metric-note">Jumlah semua produk</p>
+      </article>
+      <article class="metric-card">
+        <p class="metric-label">Produk terlaris</p>
+        <p class="metric-value metric-product" id="bestProduct">—</p>
+        <p class="metric-note">Berdasarkan unit terjual</p>
+      </article>
+    </section>
+
+    <section class="chart-grid">
+      <article class="panel chart-panel">
+        <div class="section-heading">
+          <div>
+            <h2>Pendapatan per bulan</h2>
+            <p>Grafik garis untuk melihat perubahan dari waktu ke waktu.</p>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="salesChart" role="img" aria-label="Grafik garis pendapatan bulanan. Ringkasan data tersedia pada tabel di bawah grafik.">
+            Grafik pendapatan bulanan. Lihat tabel data di bawah untuk informasi yang sama.
+          </canvas>
+        </div>
+        <div class="legend"><span class="legend-dot"></span> Pendapatan (rupiah)</div>
+      </article>
+
+      <article class="panel chart-panel">
+        <div class="section-heading">
+          <div>
+            <h2>Unit terjual per produk</h2>
+            <p>Grafik batang untuk membandingkan produk.</p>
+          </div>
+        </div>
+        <div id="barChart" class="bar-chart" aria-label="Grafik batang unit terjual per produk"></div>
+      </article>
+    </section>
+
+    <section class="panel table-panel">
+      <div class="section-heading">
+        <div>
+          <h2>Data penjualan</h2>
+          <p>Tabel menyediakan angka yang mendasari visualisasi.</p>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th scope="col">Bulan</th><th scope="col">Produk</th><th scope="col">Kategori</th><th scope="col">Unit terjual</th><th scope="col">Pendapatan</th></tr>
+          </thead>
+          <tbody id="dataTable"></tbody>
+        </table>
+      </div>
+      <p id="emptyState" class="empty-state" hidden>Tidak ada data untuk filter ini.</p>
+    </section>
+
+    <section class="panel evaluation">
+      <h2>Evaluasi pengalaman pengguna</h2>
+      <p>Apakah informasi mudah dipahami? Berikan penilaian singkat untuk simulasi evaluasi usability.</p>
+      <form id="feedbackForm">
+        <label for="rating">Seberapa mudah dashboard ini digunakan?</label>
+        <select id="rating" required>
+          <option value="">Pilih penilaian</option>
+          <option value="5">5 — Sangat mudah</option>
+          <option value="4">4 — Mudah</option>
+          <option value="3">3 — Cukup</option>
+          <option value="2">2 — Sulit</option>
+          <option value="1">1 — Sangat sulit</option>
+        </select>
+        <label for="feedbackText">Saran perbaikan (opsional)</label>
+        <textarea id="feedbackText" rows="3" placeholder="Contoh: tambahkan keterangan pada grafik..."></textarea>
+        <button class="button-primary" type="submit">Kirim penilaian</button>
+      </form>
+      <p id="feedbackStatus" class="status" role="status" aria-live="polite"></p>
+      <p class="small-note">Catatan: penilaian hanya ditampilkan di browser ini dan tidak dikirim ke server.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Proyek pembelajaran HCI • HTML, CSS, dan JavaScript • Data simulasi</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
